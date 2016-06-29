@@ -1,0 +1,21 @@
+mysql_db:
+  image: mysql
+  expose:
+    - "3306"
+  ports:
+    - "3344:3306"
+  volumes:
+    - /Users/lcy409/mysql:/var/lib/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=my-secret-pw
+    - MYSQL_DATABASE=cimon_dev
+    - MYSQL_USER=cimon
+    - MYSQL_PASSWORD=changeme
+
+cimon_jobs:
+  build: ~/workspace/go/src/github.com/andreasmaier/cimon_jobs
+  links:
+    - mysql_db
+  ports:
+    - "10000:10000"
+
